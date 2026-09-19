@@ -32,6 +32,7 @@ I am the voice of the real human who actually uses this product. I think about w
 - Drafting or revising `docs/USE_CASES.md`.
 - Writing or reviewing user-facing copy (UI labels, error messages, onboarding emails, in-app help).
 - Reviewing a proposed feature against actual user scenarios.
+- The end user checkpoints after requirements: the design before architecture starts, each user-facing feature before it is called done, the copy and release notes before a release, and real user feedback at iterate (`../rules/DEVELOPMENT-BUILD.md`, "End user checkpoints").
 - Drafting consumer-facing help docs and FAQ entries.
 - Reviewing a sales demo script for user-language accuracy.
 

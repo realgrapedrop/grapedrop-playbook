@@ -9,10 +9,11 @@ Stages 1 and 2 run once per project. Stages 3 to 5 are mostly once per project b
 <table>
   <thead>
     <tr>
-      <th width="18%">Stage</th>
-      <th width="32%">What happens</th>
-      <th width="18%">Lead</th>
-      <th width="32%">Artifact</th>
+      <th width="14%">Stage</th>
+      <th width="24%">What happens</th>
+      <th width="14%">Lead</th>
+      <th width="24%">End user check</th>
+      <th width="24%">Artifact</th>
     </tr>
   </thead>
   <tbody>
@@ -20,52 +21,66 @@ Stages 1 and 2 run once per project. Stages 3 to 5 are mostly once per project b
       <td>1. Concept</td>
       <td>Brainstorm a vague idea into a structured spec</td>
       <td>architect</td>
+      <td>None yet. There is nothing to check against until the use cases exist</td>
       <td><code>docs/specs/&lt;topic&gt;-design.md</code></td>
     </tr>
     <tr>
       <td>2. Requirements</td>
       <td>Spec to use cases to testable requirements</td>
       <td>end-user, architect</td>
+      <td>The end user leads here. The use cases written now are what every later check uses</td>
       <td><code>docs/USE_CASES.md</code>, <code>docs/REQUIREMENTS.md</code></td>
     </tr>
     <tr>
       <td>3. Design</td>
       <td>The design doc: principles, user experience, the UI system</td>
       <td>architect, designer</td>
+      <td>Does the design serve the use cases? Checked before architecture starts</td>
       <td><code>docs/DESIGN.md</code></td>
     </tr>
     <tr>
       <td>4. Architecture</td>
       <td>Technical architecture, load-bearing decisions, diagrams</td>
       <td>architect</td>
+      <td>None. The design check already covers what the user sees</td>
       <td><code>docs/ARCHITECTURE.md</code>, ADRs, diagrams</td>
     </tr>
     <tr>
       <td>5. Planning</td>
       <td>Turn the architecture into an ordered implementation plan</td>
       <td>developer</td>
+      <td>None</td>
       <td>Implementation plan</td>
     </tr>
     <tr>
       <td>6. Build</td>
       <td>Code, tests, review</td>
       <td>developer, qa-engineer</td>
+      <td>Each feature is checked against its use case before it is called done</td>
       <td>Working code, tests passing in CI</td>
     </tr>
     <tr>
       <td>7. Ship</td>
       <td>Staging, production, monitoring, incidents</td>
       <td>developer, support</td>
+      <td>User-facing copy, error messages, and release notes are reviewed before release</td>
       <td>Code running in production</td>
     </tr>
     <tr>
       <td>8. Iterate</td>
       <td>Real-world learning fed back through earlier stages</td>
       <td>persona owning the area</td>
+      <td>What real users say and do updates the use cases, and the loop starts again</td>
       <td>Updated docs</td>
     </tr>
   </tbody>
 </table>
+
+**Lead means accountable, not alone.** The Lead column names who owns a stage and its artifact. It does not list everyone involved. Other personas contribute and review, and you approve the artifact at every stage.
+
+**The end user comes back.** A team that hears from the user once, at requirements, can build the wrong thing with great rigor. So the end user persona returns at design, build, ship, and iterate, as the End user check column shows. The check is always the same question: does this still serve the use cases in `docs/USE_CASES.md`? The end user persona is an advocate working from those written use cases. It is not a substitute for real users. Before launch, test the flows that matter with real people or close proxies. After launch, what real users say and do is the input to Stage 8.
+
+**Who triggers the check.** Agents cannot hand work to each other. Only the main session can dispatch an agent. So the check is the main session's job, and yours: when a design is drafted, a feature is finished, or a release is ready, dispatch the end user agent before moving on. An agent that finishes work needing the check says so in its final message. The prompts are in `../reference/rules/DESIGN-METHODOLOGY.md` (4.1) and `../reference/rules/DEVELOPMENT-BUILD.md` ("End user checkpoints").
 
 Two things sit outside the eight stages on purpose.
 

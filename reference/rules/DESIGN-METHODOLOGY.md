@@ -153,6 +153,16 @@ policy, and the three or four most important end-to-end flows.
 Use the Architect persona.
 ```
 
+**End user check.** Before the design feeds architecture, check it against the use cases. A design can be coherent and still serve the wrong flow, and this is the cheapest point to find out. The main session runs this; agents cannot dispatch each other.
+
+```
+Using the enduser agent, check docs/DESIGN.md against
+docs/USE_CASES.md. For each use case, say whether the design's
+flows serve it, strain it, or miss it. Findings only, no rewrites.
+```
+
+Resolve what it finds in `docs/DESIGN.md`, or in `docs/USE_CASES.md` if the use case was the thing that was wrong, before moving on.
+
 **Flows to.** Phase 4.2. Design feeds architecture.
 
 ### 4.2 Architecture

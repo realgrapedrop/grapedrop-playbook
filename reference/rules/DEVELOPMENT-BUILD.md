@@ -22,6 +22,38 @@ The build phase is where good planning either pays off or gets exposed. The docs
 
 Each phase below explains why it matters, the artifact or state it produces, and the example Claude prompts to drive it.
 
+## End user checkpoints
+
+Tests prove the code does what the plan said. They do not prove the plan was what the user needed. That is a separate question, and it gets asked three times during build, ship, and iterate. The question is always the same: does this still serve the use cases in `docs/USE_CASES.md`?
+
+Agents cannot dispatch each other. Only the main session can. So these checkpoints belong to the main session and to you. When the developer agent finishes work that a user will see or touch, it says so in its final message ("needs an end user check against UC-<id>"). The main session then runs the check before moving on.
+
+**Checkpoint 1. Before a feature is called done (after Phase 4, code review).** Passing tests and an approved review are not "done" for anything a user touches.
+
+```
+Using the enduser agent, check the <feature> work against
+docs/USE_CASES.md UC-<id>. Walk the flow the way that user would.
+Report where it fails the use case, where it is confusing, and
+where it is fine. Do not rewrite code. Findings only.
+```
+
+A gap goes back to the developer as a normal bug (`BUG-TRACKING.md`). If the feature is right and the use case is wrong, that is a requirements change. Update `docs/USE_CASES.md` first, through Phase 9, and do not quietly build past it.
+
+**Checkpoint 2. Before a release (Phase 7, deployment).** The end user agent reviews everything a user will read: interface copy, error messages, onboarding and help text, and the release notes. Copy is part of the product, and it ships last and gets rushed.
+
+```
+Using the enduser agent, review the user-facing copy and the
+release notes for <release>. Flag jargon, anything a new user would
+misread, and any place the notes describe the change from our side
+instead of the user's.
+```
+
+**Checkpoint 3. At iterate (Phase 9).** What real users say and do is evidence about the use cases, not only about the code. When feedback, support tickets, or usage data arrive, the end user agent asks whether a use case is wrong, missing, or out of date, and proposes the update to `docs/USE_CASES.md`. That update is what restarts the loop at requirements.
+
+The end user agent is an advocate working from written use cases. It catches drift between what was specified and what was built. It cannot tell you the use cases themselves were wrong. Only real users can. Before launch, put the flows that matter in front of real people or close proxies. After launch, their behavior is the input to Checkpoint 3.
+
+Skip the checkpoints for work no user sees: internal refactors, build tooling, dependency upgrades. Say that you skipped it and why.
+
 ## Phase 1. Implementation plan
 
 **Why.** Code is built best when the work is decomposed into bite-sized, ordered tasks with clear acceptance criteria. The writing-plans skill produces exactly that. Each task is two to five minutes of work, has concrete files to modify, and a verification step. Without a plan, sessions wander and similar work gets reinvented across the codebase.

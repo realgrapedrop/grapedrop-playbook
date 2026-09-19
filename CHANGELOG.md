@@ -6,6 +6,31 @@ Versions follow [Semantic Versioning](https://semver.org). MAJOR for a backward-
 
 The current version also lives in the `VERSION` file at the repo root. Every release updates both this file and `VERSION` in the same commit; `install-agents.sh` stamps `VERSION` into downstream projects at `.claude/playbook-version` so an installed project knows which release it came from.
 
+## [v2.3.0] - 2026-09-19 - The end user comes back after requirements
+
+A reader pointed out that the lifecycle chart shows the end user once, at requirements, and that a team which hears from the user once can build the wrong thing with great rigor. The chart shows who leads each stage, not everyone involved, so the reading was partly a misreading. The point underneath it was right. The end user persona could be brought back at any stage, but nothing in the design, build, or ship flows made that happen, and `DEVELOPMENT-BUILD.md` did not mention the end user at all. This release makes the check part of the process.
+
+### Added
+
+- **End user checkpoints in `reference/rules/DEVELOPMENT-BUILD.md`.** Three of them, all asking the same question, which is whether the work still serves the use cases in `docs/USE_CASES.md`: before a user-facing feature is called done, before a release (copy, error messages, release notes), and at iterate, where real user feedback becomes updates to the use cases. Each has a paste-ready prompt. Work no user sees is exempt, and the doc says to state that the check was skipped and why.
+- **An end user check at design** in `reference/rules/DESIGN-METHODOLOGY.md` 4.1, before the design feeds architecture. It is the cheapest point to find a design that serves the wrong flow.
+- **An "End user check" column in the `docs/LIFECYCLE.md` table**, and three short paragraphs under it: Lead means accountable, not alone; the end user comes back; and who triggers the check.
+- **The honest limit is stated.** The end user persona is an advocate working from written use cases. It catches drift between what was specified and what was built. It cannot tell you the use cases were wrong. Only real users can, so the docs say to test the flows that matter with real people or close proxies before launch.
+
+### Changed
+
+- **The check is assigned to the main session, because agents cannot dispatch each other.** A rule telling the developer agent to call the end user agent would never fire. So the developer, designer, and architect agents now end their final message by saying an end user check is needed, and the `CLAUDE.md` block the wizard writes tells the main session to run it. `AGENTS.md` says the same for other tools.
+- **All 17 agent definitions now point at `docs/LIFECYCLE.md`.** None did before, so no agent had ever been shown the eight stages, who leads them, or how they loop.
+- The end user agent and `reference/personas/ENDUSER-PERSONA.md` list the checkpoints among the agent's duties.
+
+### Not changed
+
+The hero image still shows the Lead and Output rows only. The checkpoints are in the docs and the agent definitions, which is what an AI reads. The picture can follow later.
+
+### Upgrading
+
+No migration. Re-run `install-agents.sh` to pick up the 17 updated agent definitions. To add the two new lines to an existing project's `CLAUDE.md`, ask Claude to "run START-PLAYBOOK.md Phase 7, the CLAUDE.md block only".
+
 ## [v2.2.0] - 2026-09-18 - Renamed grapedrop-playbook; bootstrap an existing project; a production line for design assets
 
 Two additions. The playbook can now be installed into a repository that already has code and history, safely. And it gains a process for producing visual assets that does not depend on long correction loops.

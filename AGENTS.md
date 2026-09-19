@@ -38,6 +38,8 @@ Each agent's persona file lives at `.project/<ROLE>-PERSONA.md` (the canonical v
 
 Each agent pins its own model in its definition file. Ad hoc subagents do not, so they inherit the main session's model; when you dispatch one for reading or research, name a cheaper model for it. When you are the agent being dispatched, return conclusions and file paths, not the raw material you read, because your final message lands in the caller's context. The full discipline is in `.project/playbook/reference/rules/CONTEXT-ECONOMY.md`.
 
+The lifecycle is in `.project/playbook/docs/LIFECYCLE.md`: eight stages, a lead for each, and the points where the end user persona comes back to check the work against `docs/USE_CASES.md` (design, build, ship, iterate). Lead means accountable, not alone. Agents cannot dispatch each other, so whoever runs the main session triggers those checks.
+
 ## When you discover something worth sharing
 
 Project-level decisions, gotchas, and cross-agent handoff facts go in `.project/playbook/knowledge/<topic>.md` using the dated-entries convention in `.project/playbook/knowledge/README.md`. This is distinct from per-agent memory (one lane) and from personal session memory (one user, one machine).

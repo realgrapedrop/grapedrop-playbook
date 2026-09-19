@@ -340,6 +340,10 @@ This project uses the lifecycle playbook at .project/playbook/. Agents are in
 - The architect persona rules live in .project/ARCHITECT-PERSONA.md. It owns docs/DESIGN.md and docs/ARCHITECTURE.md.
 - The developer persona rules live in .project/DEVELOPER-PERSONA.md. It owns the code and tests.
 - (one line per customized persona, with the artifacts it owns)
+- The eight stages, who leads each, and where the end user check falls: .project/playbook/docs/LIFECYCLE.md
+- Agents cannot dispatch each other, so the end user check is this session's job. Before a design feeds
+  architecture, before a user-facing feature is called done, and before a release, dispatch the enduser
+  agent to check the work against docs/USE_CASES.md.
 - Spending context well: .project/playbook/reference/rules/CONTEXT-ECONOMY.md
 - Producing visual assets: .project/playbook/reference/rules/DESIGN-PRODUCTION.md
 <!-- playbook:end -->
