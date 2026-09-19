@@ -6,22 +6,6 @@ Versions follow [Semantic Versioning](https://semver.org). MAJOR for a backward-
 
 The current version also lives in the `VERSION` file at the repo root. Every release updates both this file and `VERSION` in the same commit; `install-agents.sh` stamps `VERSION` into downstream projects at `.claude/playbook-version` so an installed project knows which release it came from.
 
-## [v2.4.0] - 2026-09-19 - Free for small businesses too: the playbook is now offered under two licenses
-
-The playbook was licensed under PolyForm Noncommercial alone. That made it free to learn from and free for schools and charities, but anyone building something to sell, however small, needed a commercial license. That did not match who the playbook is for.
-
-### Changed
-
-- **The playbook is now offered under your choice of two licenses.** Use it under either the PolyForm Noncommercial License 1.0.0 or the PolyForm Small Business License 1.0.0. You only need to be covered by one.
-- **Who is free now.** Everyone who was free before: personal study, hobby projects, research, and charities, schools, public research bodies, and government institutions of any size. And newly: commercial use by any company with fewer than 100 people and under 1,000,000 USD (2019, inflation adjusted) in revenue in the prior tax year, which includes solo founders and freelancers.
-- **Who still needs a commercial license.** Larger companies using it commercially. The contact is unchanged.
-- **Why both and not a swap.** The Small Business license has one permitted purpose, use for the benefit of a small company. It has no personal use section and none for schools or charities. Switching to it alone would have left a student or hobbyist with no company without clear coverage, and would have taken free use away from large schools, charities, and government bodies. Offering both means nobody who was free loses anything.
-- **Files.** `LICENSE` is now a short summary of the choice. The full texts are `LICENSE-NONCOMMERCIAL.md` and `LICENSE-SMALL-BUSINESS.md`, both unmodified from the PolyForm project, each with the required notice line. The License section of `README.md` is rewritten to match.
-
-### If you already have a copy
-
-Nothing is taken away. A copy you obtained under the earlier terms keeps them, and from this version on you can also rely on the Small Business license if it covers you.
-
 ## [v2.3.0] - 2026-09-19 - The end user comes back after requirements
 
 A reader pointed out that the lifecycle chart shows the end user once, at requirements, and that a team which hears from the user once can build the wrong thing with great rigor. The chart shows who leads each stage, not everyone involved, so the reading was partly a misreading. The point underneath it was right. The end user persona could be brought back at any stage, but nothing in the design, build, or ship flows made that happen, and `DEVELOPMENT-BUILD.md` did not mention the end user at all. This release makes the check part of the process.
