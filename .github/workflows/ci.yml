@@ -1,0 +1,94 @@
+# CI for the playbook source repo.
+# Three jobs: lint the install scripts, check every internal doc link resolves,
+# and smoke-test the agent install end to end in a throwaway project directory.
+# The playbook is mostly prose plus shell; this is the enforcement layer that
+# keeps a broken relative link or a script regression from shipping silently.
+
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  version-guard:
+    name: VERSION matches the changelog
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: newest changelog entry equals VERSION
+        run: |
+          VER="$(head -n1 VERSION | tr -d '[:space:]')"
+          CHVER="$(grep -m1 -oE '^## \[v[0-9]+\.[0-9]+\.[0-9]+\]' CHANGELOG.md | tr -d '#[] ')"
+          echo "VERSION file: $VER; newest changelog entry: $CHVER"
+          test "$VER" = "$CHVER"
+
+  shellcheck:
+    name: shellcheck the install scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: shellcheck
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq shellcheck
+          shellcheck scripts/*.sh
+      - name: bash syntax check
+        run: |
+          for f in scripts/*.sh; do bash -n "$f"; done
+
+  links:
+    name: internal doc links resolve
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: lychee (offline; local file links only)
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --offline
+            --no-progress
+            --include-fragments
+            '**/*.md'
+          fail: true
+
+  install-smoke:
+    name: install-agents.sh + verify-install.sh smoke test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: playbook
+      - name: run the agent install in a throwaway project
+        run: |
+          set -euo pipefail
+
+          # Stand up a fake project root with the playbook at its documented path.
+          PROJECT="$(mktemp -d)"
+          mkdir -p "$PROJECT/.project"
+          cp -r "$GITHUB_WORKSPACE/playbook" "$PROJECT/.project/playbook"
+
+          # install-agents.sh pre-flights the claude binary; stub it. The smoke
+          # test exercises the copy/stamp logic, not Claude Code itself.
+          STUB_BIN="$(mktemp -d)"
+          printf '#!/bin/sh\necho "claude ci-stub 0.0.0"\n' > "$STUB_BIN/claude"
+          chmod +x "$STUB_BIN/claude"
+          export PATH="$STUB_BIN:$PATH"
+
+          cd "$PROJECT"
+          bash .project/playbook/scripts/install-agents.sh
+
+          # Assert the install produced what the docs promise.
+          AGENT_COUNT="$(find .claude/agents -name '*.md' | wc -l)"
+          test "$AGENT_COUNT" -eq 17 || { echo "expected 17 agents, got $AGENT_COUNT"; exit 1; }
+          test -f .claude/SECURITY-POSTURE.md
+          test -f .claude/playbook-version
+          diff .claude/playbook-version .project/playbook/VERSION
+
+          # Re-run must be idempotent and must preserve a customized baseline.
+          echo "# project customization" >> .claude/SECURITY-POSTURE.md
+          bash .project/playbook/scripts/install-agents.sh
+          grep -q "project customization" .claude/SECURITY-POSTURE.md
+
+          # verify-install.sh must pass (warnings allowed, errors not).
+          bash .project/playbook/scripts/verify-install.sh

@@ -1,0 +1,5 @@
+# Keep this folder empty in the playbook source repo.
+# Users drop project-specific materials here and they stay local to their project.
+*
+!README.md
+!.gitignore

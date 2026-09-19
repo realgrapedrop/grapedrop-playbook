@@ -1,0 +1,11 @@
+# Claude's local working setup (persona, project instructions, session memory).
+# Not part of the shipped playbook.
+.claude/
+
+# Local working area: image prompts, drafts, and other internal notes.
+# Not part of the shipped playbook; never pushed to GitHub.
+.project/
+
+# Local screenshots dropped into the repo folder (e.g. macOS screen captures).
+# Keeps them out of the shipped playbook; images/ is still tracked.
+Screenshot*.png
