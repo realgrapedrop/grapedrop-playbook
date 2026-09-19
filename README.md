@@ -139,10 +139,10 @@ Find me on X: [@realgrapedrop](https://x.com/realgrapedrop).
 
 ## License
 
-Free for noncommercial use, under the [PolyForm Noncommercial License 1.0.0](LICENSE).
+Free for almost everyone. You can use it under either of two licenses, your choice.
 
-- **You can** use it, change it, and share it for personal study, hobby projects, research, and teaching. Charities, schools, public research bodies, and government institutions can use it for any purpose.
-- **You need a commercial license** to use it in or for a business, including using it to build a product you plan to sell. Write to captain@grapedrop.xyz.
-- If you share it, keep the `Required Notice` line from the top of the `LICENSE` file.
+- **Learning, hobby projects, research.** Free, under the [PolyForm Noncommercial License](LICENSE-NONCOMMERCIAL.md). Charities, schools, public research bodies, and government institutions can use it for any purpose, at any size.
+- **Building something to sell.** Free, under the [PolyForm Small Business License](LICENSE-SMALL-BUSINESS.md), if your company has fewer than 100 people and under 1,000,000 USD in revenue last tax year (in 2019 dollars, adjusted for inflation). That covers solo founders and freelancers.
+- **Larger companies using it commercially** need a commercial license. Write to captain@grapedrop.xyz.
 
-This summary is for convenience. The `LICENSE` file is what governs.
+If you share it, keep the `Required Notice` line from the top of the `LICENSE` file. This summary is for convenience. The license files are what govern.
